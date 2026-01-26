@@ -1,0 +1,12 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="AutomationExercise Suite">
+
+    <test name="Smoke Tests">
+        <classes>
+            <class name="tests.TC01_OpenHomePageTest"/>
+            <class name="tests.TC02_NavigateToLoginPageTest"/>
+            <class name="tests.TC03_SignupNewUserTest"/>
+        </classes>
+    </test>
+
+</suite>
