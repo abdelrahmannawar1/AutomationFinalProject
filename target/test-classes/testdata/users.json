@@ -1,11 +1,6 @@
 {
-  "validUser": {
-    "name": "Abdelrahman",
-    "email": "abdo_test_123@gmail.com",
-    "password": "Test@12345"
-  },
-  "invalidUser": {
-    "email": "wrong@gmail.com",
-    "password": "wrongpass"
+  "loginUser": {
+    "email": "automation.valid@gmail.com",
+    "password": "123456"
   }
 }
