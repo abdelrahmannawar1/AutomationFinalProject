@@ -1,14 +1,13 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Automation Suite">
-
-    <test name="Smoke And Core Tests">
+<suite name="Automation Exercise Suite">
+    <test name="All Tests">
         <classes>
 
-            <class name="tests.OpenHomePageSmokeTest"/>
-            <class name="tests.TC01_RegisterUserTest"/>
-            <class name="tests.TC02_LoginWithValidCredentialsTest"/>
-
+            <class name="tests.TC08_VerifyAllProductsTest"/>
+            <class name="tests.TC09_SearchProductTest"/>
+            <class name="tests.TC10_VerifySubscriptionInHomeTest"/>
+            <class name="tests.TC11_VerifySubscriptionInCartTest"/>
+            <class name="tests.TC12_AddProductsInCartTest"/>
         </classes>
     </test>
-
 </suite>

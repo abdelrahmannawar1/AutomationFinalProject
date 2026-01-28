@@ -3,20 +3,26 @@ package base;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import pages.HomePage;
 import utils.DriverFactory;
 
 public class BaseTest {
 
     protected WebDriver driver;
+    protected HomePage homePage;
 
     @BeforeMethod
-    public void setup() {
+    public void setUp() {
         driver = DriverFactory.initDriver();
+        driver.manage().window().maximize();
         driver.get("https://automationexercise.com");
+        homePage = new HomePage(driver);
     }
 
     @AfterMethod
     public void tearDown() {
-        DriverFactory.quitDriver();
+        if (driver != null) {
+            driver.quit();
+        }
     }
 }

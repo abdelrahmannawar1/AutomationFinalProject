@@ -1,6 +1,10 @@
 {
-  "loginUser": {
-    "email": "automation.valid@gmail.com",
+  "validUser": {
+    "email": "email_you_registered_manually@test.com",
+    "password": "password_you_registered_manually"
+  },
+  "invalidUser": {
+    "email": "wrong@test.com",
     "password": "123456"
   }
 }
