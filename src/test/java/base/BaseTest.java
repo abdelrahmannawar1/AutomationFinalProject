@@ -6,6 +6,8 @@ import org.testng.annotations.BeforeMethod;
 import pages.HomePage;
 import utils.DriverFactory;
 
+import java.awt.*;
+
 public class BaseTest {
 
     protected WebDriver driver;
@@ -15,6 +17,7 @@ public class BaseTest {
     public void setUp() {
         driver = DriverFactory.initDriver();
         driver.manage().window().maximize();
+
         driver.get("https://automationexercise.com");
         homePage = new HomePage(driver);
     }

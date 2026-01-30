@@ -58,8 +58,10 @@ public class HomePage {
         scrollToBottom();
         wait.until(ExpectedConditions.visibilityOfElementLocated(subscriptionEmail))
                 .sendKeys(email);
-        wait.until(ExpectedConditions.elementToBeClickable(subscribeBtn))
-                .click();
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].click();",
+                wait.until(ExpectedConditions.visibilityOfElementLocated(subscribeBtn)));
+
     }
     public void clickSignupLogin() {
         wait.until(ExpectedConditions.elementToBeClickable(signupLoginBtn)).click();

@@ -13,7 +13,10 @@ public class TC09_SearchProductTest extends BaseTest {
         driver.findElement(org.openqa.selenium.By.xpath("//a[contains(text(),'Products')]")).click();
 
         ProductsPage productsPage = new ProductsPage(driver);
-        productsPage.searchProduct("Dress");
+
+        homePage.openProductsPage();
+        productsPage.searchProduct("dress");
+
 
         Assert.assertTrue(productsPage.isSearchedProductsVisible());
     }

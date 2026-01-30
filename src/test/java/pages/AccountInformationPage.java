@@ -30,32 +30,20 @@ public class AccountInformationPage {
         this.driver = driver;
     }
 
-    public void fillAccountInfoAndCreate(String password) {
+    public void fillAccountInformation() {
 
-        // Title
-        driver.findElement(titleMrRadio).click();
+        driver.findElement(By.id("password")).sendKeys("123456");
 
-        // Password
-        driver.findElement(passwordInput).sendKeys(password);
+        driver.findElement(By.id("first_name")).sendKeys("Test");
+        driver.findElement(By.id("last_name")).sendKeys("User");
+        driver.findElement(By.id("address1")).sendKeys("Cairo");
+        driver.findElement(By.id("state")).sendKeys("Cairo");
+        driver.findElement(By.id("city")).sendKeys("Cairo");
+        driver.findElement(By.id("zipcode")).sendKeys("12345");
+        driver.findElement(By.id("mobile_number")).sendKeys("01000000000");
 
-        // DOB (اختيار أي قيم)
-        new Select(driver.findElement(daysSelect)).selectByVisibleText("10");
-        new Select(driver.findElement(monthsSelect)).selectByVisibleText("May");
-        new Select(driver.findElement(yearsSelect)).selectByVisibleText("2000");
-
-        // Address Info
-        driver.findElement(firstNameInput).sendKeys("Abdelrahman");
-        driver.findElement(lastNameInput).sendKeys("Nawar");
-        driver.findElement(address1Input).sendKeys("Zagazig Street 10");
-
-        new Select(driver.findElement(countrySelect)).selectByVisibleText("Canada");
-
-        driver.findElement(stateInput).sendKeys("Zagazig");
-        driver.findElement(cityInput).sendKeys("Sharqia");
-        driver.findElement(zipcodeInput).sendKeys("12345");
-        driver.findElement(mobileNumberInput).sendKeys("01000000000");
-
-        // Create Account
-        driver.findElement(createAccountBtn).click();
+        driver.findElement(By.xpath("//button[@data-qa='create-account']")).click();
     }
+
+
 }
