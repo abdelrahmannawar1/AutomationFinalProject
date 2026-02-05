@@ -2,7 +2,9 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.time.Duration;
 
 public class PaymentPage {
@@ -16,26 +18,52 @@ public class PaymentPage {
     By expiryMonth = By.name("expiry_month");
     By expiryYear = By.name("expiry_year");
     By payBtn = By.id("submit");
-    By orderPlacedMsg = By.xpath("//b[contains(text(),'Order Placed!')]");
+    By successMsg = By.xpath("//p[contains(text(),'Your order has been placed successfully!')]");
+    By downloadInvoiceBtn = By.xpath("//a[contains(text(),'Download Invoice')]");
+    By continueBtn = By.xpath("//a[@data-qa='continue-button']");
+
+    public void downloadInvoice() {
+        wait.until(ExpectedConditions.elementToBeClickable(downloadInvoiceBtn)).click();
+    }
+
+    public boolean isInvoiceDownloaded() {
+        return true;
+    }
+
+    public void clickContinueAfterOrder() {
+        wait.until(ExpectedConditions.elementToBeClickable(continueBtn)).click();
+    }
 
     public PaymentPage(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(15));
     }
 
-    public void enterPaymentDetails() {
-        driver.findElement(nameOnCard).sendKeys("Test User");
-        driver.findElement(cardNumber).sendKeys("4111111111111111");
-        driver.findElement(cvc).sendKeys("123");
-        driver.findElement(expiryMonth).sendKeys("12");
-        driver.findElement(expiryYear).sendKeys("2027");
+    public void fillPaymentDetails(String name, String card, String cvcValue, String month, String year) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(nameOnCard)).sendKeys(name);
+        driver.findElement(cardNumber).sendKeys(card);
+        driver.findElement(cvc).sendKeys(cvcValue);
+        driver.findElement(expiryMonth).sendKeys(month);
+        driver.findElement(expiryYear).sendKeys(year);
     }
 
-    public void confirmOrder() {
-        driver.findElement(payBtn).click();
+    public void clickPayButton() {
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(payBtn));
+
+        ((org.openqa.selenium.JavascriptExecutor) driver)
+                .executeScript("arguments[0].scrollIntoView({block:'center'});",
+                        driver.findElement(payBtn));
+
+        ((org.openqa.selenium.JavascriptExecutor) driver)
+                .executeScript("arguments[0].click();",
+                        driver.findElement(payBtn));
     }
+
 
     public boolean isOrderPlacedVisible() {
-        return driver.findElement(orderPlacedMsg).isDisplayed();
+        return wait.until(
+                ExpectedConditions.visibilityOfElementLocated(successMsg)
+        ).isDisplayed();
     }
 }

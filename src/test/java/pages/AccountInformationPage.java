@@ -2,48 +2,47 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class AccountInformationPage {
 
     WebDriver driver;
+    WebDriverWait wait;
 
-    private By titleMrRadio = By.id("id_gender1");
-    private By passwordInput = By.id("password");
-
-    private By daysSelect = By.id("days");
-    private By monthsSelect = By.id("months");
-    private By yearsSelect = By.id("years");
-
-    private By firstNameInput = By.id("first_name");
-    private By lastNameInput = By.id("last_name");
-    private By address1Input = By.id("address1");
-    private By countrySelect = By.id("country");
-    private By stateInput = By.id("state");
-    private By cityInput = By.id("city");
-    private By zipcodeInput = By.id("zipcode");
-    private By mobileNumberInput = By.id("mobile_number");
-
-    private By createAccountBtn = By.xpath("//button[@data-qa='create-account']");
+    By password = By.id("password");
+    By firstName = By.id("first_name");
+    By lastName = By.id("last_name");
+    By address = By.id("address1");
+    By country = By.id("country");
+    By state = By.id("state");
+    By city = By.id("city");
+    By zipcode = By.id("zipcode");
+    By mobileNumber = By.id("mobile_number");
+    By createAccountBtn = By.xpath("//button[@data-qa='create-account']");
 
     public AccountInformationPage(WebDriver driver) {
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
     public void fillAccountInformation() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(password))
+                .sendKeys("123456");
 
-        driver.findElement(By.id("password")).sendKeys("123456");
-
-        driver.findElement(By.id("first_name")).sendKeys("Test");
-        driver.findElement(By.id("last_name")).sendKeys("User");
-        driver.findElement(By.id("address1")).sendKeys("Cairo");
-        driver.findElement(By.id("state")).sendKeys("Cairo");
-        driver.findElement(By.id("city")).sendKeys("Cairo");
-        driver.findElement(By.id("zipcode")).sendKeys("12345");
-        driver.findElement(By.id("mobile_number")).sendKeys("01000000000");
-
-        driver.findElement(By.xpath("//button[@data-qa='create-account']")).click();
+        driver.findElement(firstName).sendKeys("Test");
+        driver.findElement(lastName).sendKeys("User");
+        driver.findElement(address).sendKeys("Cairo");
+        driver.findElement(state).sendKeys("Cairo");
+        driver.findElement(city).sendKeys("Cairo");
+        driver.findElement(zipcode).sendKeys("12345");
+        driver.findElement(mobileNumber).sendKeys("01000000000");
     }
 
-
+    public void clickCreateAccount() {
+        wait.until(ExpectedConditions.elementToBeClickable(createAccountBtn))
+                .click();
+    }
 }

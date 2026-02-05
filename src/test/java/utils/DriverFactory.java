@@ -4,29 +4,33 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class DriverFactory {
 
     public static WebDriver initDriver() {
 
         ChromeOptions options = new ChromeOptions();
 
-        // تقليل مشاكل الإعلانات
+        // يقفل الإشعارات
         options.addArguments("--disable-notifications");
+
+        // يقفل البوب أب
         options.addArguments("--disable-popup-blocking");
+
+        // يمنع تحميل الصور (يساعد يقلل الإعلانات)
+        options.addArguments("--blink-settings=imagesEnabled=false");
+
+        // يقلل الإعلانات
         options.addArguments("--disable-infobars");
         options.addArguments("--disable-extensions");
         options.addArguments("--disable-gpu");
 
-        // منع تحميل الصور (بيقلل الإعلانات جامد)
-        Map<String, Object> prefs = new HashMap<>();
-        prefs.put("profile.managed_default_content_settings.images", 2);
-        prefs.put("profile.default_content_setting_values.notifications", 2);
+        // ده مهم جداً
+        options.addArguments("--disable-features=IsolateOrigins,site-per-process");
+        options.addArguments("--host-resolver-rules=MAP googleads.g.doubleclick.net 127.0.0.1");
 
-        options.setExperimentalOption("prefs", prefs);
+        WebDriver driver = new ChromeDriver(options);
+        driver.manage().deleteAllCookies();
 
-        return new ChromeDriver(options);
+        return driver;
     }
 }

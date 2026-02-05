@@ -17,7 +17,6 @@ public class SignupPage {
     private By emailExistsMsg =
             By.xpath("//*[contains(text(),'Email Address already exist') or contains(text(),'Email Address already exists')]");
 
-
     public SignupPage(WebDriver driver) {
         this.driver = driver;
     }

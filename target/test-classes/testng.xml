@@ -1,13 +1,37 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Automation Exercise Suite">
+
+<suite name="Automation Exercise Suite" parallel="false">
+
     <test name="All Tests">
         <classes>
 
+            <class name="tests.TC01_RegisterUserTest"/>
+            <class name="tests.TC02_LoginWithValidCredentialsTest"/>
+            <class name="tests.TC03_LoginWithInvalidCredentialsTest"/>
+            <class name="tests.TC04_LogoutUserTest"/>
+            <class name="tests.TC05_RegisterWithExistingEmailTest"/>
+            <class name="tests.TC06_ContactUsFormTest"/>
+            <class name="tests.TC07_VerifyTestCasesPageTest"/>
             <class name="tests.TC08_VerifyAllProductsTest"/>
             <class name="tests.TC09_SearchProductTest"/>
             <class name="tests.TC10_VerifySubscriptionInHomeTest"/>
             <class name="tests.TC11_VerifySubscriptionInCartTest"/>
             <class name="tests.TC12_AddProductsInCartTest"/>
+            <class name="tests.TC13_VerifyProductQuantityInCartTest"/>
+            <class name="tests.TC14_PlaceOrderRegisterWhileCheckoutTest"/>
+            <class name="tests.TC15_PlaceOrderRegisterBeforeCheckoutTest"/>
+            <class name="tests.TC16_PlaceOrderLoginBeforeCheckoutTest"/>
+            <class name="tests.TC17_RemoveProductsFromCartTest"/>
+            <class name="tests.TC18_ViewCategoryProductsTest"/>
+            <class name="tests.TC19_ViewCartBrandProductsTest"/>
+            <class name="tests.TC20_SearchProductsVerifyCartAfterLoginTest"/>
+            <class name="tests.TC21_AddReviewOnProductTest"/>
+            <class name="tests.TC22_AddToCartFromRecommendedTest"/>
+            <class name="tests.TC23_VerifyAddressDetailsInCheckoutTest"/>
+            <class name="tests.TC24_DownloadInvoiceAfterPurchaseTest"/>
+            <class name="tests.TC25_VerifyScrollUpUsingArrowTest"/>
+            <class name="tests.TC26_VerifyScrollUpWithoutArrowTest"/>
+
         </classes>
     </test>
 </suite>

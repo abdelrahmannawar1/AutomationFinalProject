@@ -2,9 +2,11 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.interactions.Actions;
 
 import java.time.Duration;
 
@@ -17,8 +19,6 @@ public class ProductsPage {
     By allProductsTitle =
             By.xpath("//h2[contains(text(),'All Products')]");
 
-    By firstViewProduct =
-            By.xpath("(//a[contains(text(),'View Product')])[1]");
     By firstViewProductBtn =
             By.xpath("(//a[contains(text(),'View Product')])[1]");
 
@@ -45,10 +45,33 @@ public class ProductsPage {
 
     By cartPageTitle =
             By.xpath("//li[contains(text(),'Shopping Cart')]");
+    By firstBrand = By.xpath("(//div[@class='brands_products']//a)[1]");
+    By secondBrand = By.xpath("(//div[@class='brands_products']//a)[2]");
+    By nameReview = By.id("name");
+    By emailReview = By.id("email");
+    By reviewText = By.id("review");
+    By submitReviewBtn = By.id("button-review");
+    By reviewSuccess = By.xpath("//span[contains(text(),'Thank you for your review.')]");
 
+    public void addReview(String name, String email, String review) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(nameReview)).sendKeys(name);
+        driver.findElement(emailReview).sendKeys(email);
+        driver.findElement(reviewText).sendKeys(review);
+        driver.findElement(submitReviewBtn).click();
+    }
 
-    public void goToCart() {
-        wait.until(ExpectedConditions.elementToBeClickable(viewCartBtn)).click();
+    public boolean isReviewSuccessVisible() {
+        return wait.until(
+                ExpectedConditions.visibilityOfElementLocated(reviewSuccess)
+        ).isDisplayed();
+    }
+
+    public void openFirstBrand() {
+        wait.until(ExpectedConditions.elementToBeClickable(firstBrand)).click();
+    }
+
+    public void openSecondBrand() {
+        wait.until(ExpectedConditions.elementToBeClickable(secondBrand)).click();
     }
 
     // ---------- Constructor ----------
@@ -57,7 +80,12 @@ public class ProductsPage {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
-    // ---------- TC08 ----------
+    // ---------- Methods ----------
+
+    public void goToCart() {
+        wait.until(ExpectedConditions.elementToBeClickable(viewCartBtn)).click();
+    }
+
     public boolean isAllProductsVisible() {
         return wait.until(
                 ExpectedConditions.visibilityOfElementLocated(allProductsTitle)
@@ -65,21 +93,16 @@ public class ProductsPage {
     }
 
     public void openFirstProduct() {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-
-        // scroll للعنصر
-        js.executeScript(
-                "arguments[0].scrollIntoView({block:'center'});",
-                wait.until(ExpectedConditions.visibilityOfElementLocated(firstViewProductBtn))
+        WebElement element = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(firstViewProductBtn)
         );
 
-        // JS click لتجاوز الإعلانات
-        js.executeScript(
-                "arguments[0].click();",
-                driver.findElement(firstViewProductBtn)
-        );
+        ((JavascriptExecutor) driver)
+                .executeScript("arguments[0].scrollIntoView({block:'center'});", element);
+
+        ((JavascriptExecutor) driver)
+                .executeScript("arguments[0].click();", element);
     }
-
 
     public boolean isProductDetailsVisible() {
         return wait.until(
@@ -87,7 +110,6 @@ public class ProductsPage {
         ).isDisplayed();
     }
 
-    // ---------- TC09 ----------
     public void searchProduct(String productName) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(searchInput))
                 .sendKeys(productName);
@@ -100,18 +122,37 @@ public class ProductsPage {
         ).isDisplayed();
     }
 
-    // ---------- TC12 ----------
     public void addFirstProductToCart() {
-        wait.until(
-                ExpectedConditions.elementToBeClickable(firstAddToCartBtn)
-        ).click();
+        WebElement element = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(firstAddToCartBtn)
+        );
+
+        ((JavascriptExecutor) driver)
+                .executeScript("arguments[0].scrollIntoView({block:'center'});", element);
+
+        ((JavascriptExecutor) driver)
+                .executeScript("arguments[0].click();", element);
     }
 
     public void addSecondProductToCart() {
-        wait.until(
-                ExpectedConditions.elementToBeClickable(secondAddToCartBtn)
-        ).click();
+
+        WebElement product =
+                wait.until(ExpectedConditions.visibilityOfElementLocated(
+                        By.xpath("(//div[@class='product-image-wrapper'])[2]")
+                ));
+
+        Actions actions = new Actions(driver);
+        actions.moveToElement(product).perform();
+
+        WebElement addBtn =
+                wait.until(ExpectedConditions.elementToBeClickable(
+                        By.xpath("(//a[contains(text(),'Add to cart')])[2]")
+                ));
+
+        ((JavascriptExecutor) driver)
+                .executeScript("arguments[0].click();", addBtn);
     }
+
 
     public void openCart() {
         wait.until(

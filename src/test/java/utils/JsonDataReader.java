@@ -9,15 +9,21 @@ import java.io.IOException;
 public class JsonDataReader {
 
     private static JsonNode jsonData;
-
-    public static void loadJsonFile(String path) {
+    public static void loadJsonFile() {
         try {
             ObjectMapper mapper = new ObjectMapper();
-            jsonData = mapper.readTree(new File(path));
-        } catch (IOException e) {
+            jsonData = mapper.readTree(
+                    JsonDataReader.class
+                            .getClassLoader()
+                            .getResourceAsStream("testdata/users.json")
+            );
+        } catch (Exception e) {
             throw new RuntimeException("Failed to load JSON file", e);
         }
     }
+
+
+
 
     public static String getData(String parent, String key) {
         if (jsonData == null) {

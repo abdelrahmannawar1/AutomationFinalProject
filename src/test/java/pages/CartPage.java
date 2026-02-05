@@ -20,6 +20,18 @@ public class CartPage {
     By productQuantity = By.xpath("//button[@class='disabled']");
     By proceedToCheckoutBtn = By.xpath("//a[contains(text(),'Proceed To Checkout')]");
     By registerLoginBtn = By.xpath("//u[contains(text(),'Register / Login')]");
+    By removeBtn = By.className("cart_quantity_delete");
+    By emptyCartMsg = By.xpath("//b[contains(text(),'Cart is empty')]");
+
+    public void removeProduct() {
+        wait.until(ExpectedConditions.elementToBeClickable(removeBtn)).click();
+    }
+
+    public boolean isCartEmpty() {
+        return wait.until(
+                ExpectedConditions.visibilityOfElementLocated(emptyCartMsg)
+        ).isDisplayed();
+    }
 
     public void proceedToCheckout() {
         wait.until(ExpectedConditions.elementToBeClickable(proceedToCheckoutBtn)).click();

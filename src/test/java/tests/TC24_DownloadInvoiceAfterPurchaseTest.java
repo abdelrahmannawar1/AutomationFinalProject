@@ -5,25 +5,24 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.*;
 
-public class TC14_PlaceOrderRegisterWhileCheckoutTest extends BaseTest {
+public class TC24_DownloadInvoiceAfterPurchaseTest extends BaseTest {
 
     @Test
-    public void placeOrderRegisterWhileCheckout() {
+    public void downloadInvoiceAfterPurchase() {
 
-        // 1. Add product to cart
+        Assert.assertTrue(homePage.isHomePageVisible());
+
         homePage.openProductsPage();
+
         ProductsPage productsPage = new ProductsPage(driver);
         productsPage.addFirstProductToCart();
         productsPage.goToCart();
 
-        // 2. Proceed to checkout
         CartPage cartPage = new CartPage(driver);
         cartPage.proceedToCheckout();
 
-        // 3. Click Register / Login
         cartPage.clickRegisterLogin();
 
-        // 4. Register new user
         SignupLoginPage signupLoginPage = new SignupLoginPage(driver);
         signupLoginPage.signup("TestUser", "test" + System.currentTimeMillis() + "@mail.com");
 
@@ -33,33 +32,24 @@ public class TC14_PlaceOrderRegisterWhileCheckoutTest extends BaseTest {
         AccountCreatedPage accountCreatedPage = new AccountCreatedPage(driver);
         accountCreatedPage.clickContinue();
 
-        // 5. Proceed again to checkout
         homePage.openCartPage();
         cartPage.proceedToCheckout();
 
-        // 6. Place order
         CheckoutPage checkoutPage = new CheckoutPage(driver);
+        checkoutPage.enterComment("Test order");
         checkoutPage.placeOrder();
 
-        // 7. Payment
         PaymentPage paymentPage = new PaymentPage(driver);
-        paymentPage.fillPaymentDetails(
-                "Test User",
-                "1234567890123456",
-                "123",
-                "12",
-                "2030"
-        );
-
+        paymentPage.fillPaymentDetails("Test User", "1234123412341234", "123", "12", "2030");
         paymentPage.clickPayButton();
 
+        Assert.assertTrue(paymentPage.isOrderPlacedVisible());
 
+        paymentPage.downloadInvoice();
+        Assert.assertTrue(paymentPage.isInvoiceDownloaded());
 
+        paymentPage.clickContinueAfterOrder();
 
-        // 8. Assert success
-        Assert.assertTrue(
-                paymentPage.isOrderPlacedVisible(),
-                "Order was not placed successfully"
-        );
+        homePage.deleteAccount();
     }
 }

@@ -20,14 +20,20 @@ public class TC04_LogoutUserTest extends BaseTest {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login(email, password);
 
+
+        Assert.assertTrue(
+                homePage.isLoggedInTextVisible(),
+                "User is not logged in"
+        );
+
+        // Logout
+        homePage.clickLogout();
+
+
         Assert.assertTrue(
                 driver.getCurrentUrl().toLowerCase().contains("login"),
                 "User is not redirected to login page"
         );
-
-
-        homePage.clickLogout();
-
-        Assert.assertTrue(driver.getCurrentUrl().contains("login"));
     }
+
 }

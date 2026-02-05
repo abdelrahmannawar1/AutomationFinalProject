@@ -8,13 +8,7 @@ import org.testng.annotations.Test;
 import pages.LoginPage;
 import utils.JsonDataReader;
 
-
 public class TC02_LoginWithValidCredentialsTest extends BaseTest {
-
-    @BeforeMethod
-    public void loadData() {
-        JsonDataReader.loadJsonFile("src/test/resources/testdata/users.json");
-    }
 
     @Test
     public void loginWithValidCredentials() {

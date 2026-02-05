@@ -17,6 +17,13 @@ public class LoginPage {
     By password = By.xpath("//input[@data-qa='login-password']");
     By loginBtn = By.xpath("//button[@data-qa='login-button']");
     By errorMsg = By.xpath("//*[contains(text(),'Your email or password is incorrect')]");
+    By loginTitle = By.xpath("//h2[contains(text(),'Login to your account')]");
+
+    public boolean isLoginPageVisible() {
+        return wait.until(
+                ExpectedConditions.visibilityOfElementLocated(loginTitle)
+        ).isDisplayed();
+    }
 
     public LoginPage(WebDriver driver) {
         this.driver = driver;
